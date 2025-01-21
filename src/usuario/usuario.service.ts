@@ -46,7 +46,7 @@ export class UsuarioService {
     return { message: "Usuario eliminado" };
   }
 
-  findByUserNameAndPassword(userName: string, password: string) {
+  findByUserNameAndPassword(userName: string) {
     return this.usuarioRepository.findOne({
       where: { nombre_usuario: userName },
       select: ['usuario_id','correo', 'password', "nombre", "apellido", "rol"]
