@@ -19,11 +19,14 @@ content-type: application/json
 
 {
     "nombre_usuario": "alexitotn21",
-    "password": ""
+    "password": "123333"
 }
 
+
+###Registrarse con google (No enviar aqui probar en el navegador)
+GET http://localhost:3000/api/auth/google
 
 
 ###Obtener el perfil del usuario
 GET http://localhost:3000/api/auth/perfil
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tYnJlIjoidXN1YXJpbyIsImFwZWxsaWRvIjoiYXBlbGxpZG8iLCJyb2wiOiJjbGllbnRlIiwiY29ycmVvIjoiRHh3V3R3QGV4YW1wbGUuY29tIiwiaWF0IjoxNzM3NDg5MzQwLCJleHAiOjE3Mzc1NzU3NDB9.LNZciXfN-utgWpoFA0_PNqr3W4Dfel-oFSb2HAa5hRk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywibm9tYnJlIjoiQWxleCAiLCJhcGVsbGlkbyI6IlRvbmF0byIsInJvbCI6ImNsaWVudGUiLCJjb3JyZW8iOiJhbGV4aXRvdG4yMUBnbWFpbC5jb20iLCJpYXQiOjE3Mzc0OTI1MjIsImV4cCI6MTczNzU3ODkyMn0.EAkcUNxzlw11TFXU0iqjOjvIcopr3SDO_uAWx4rMwLc
