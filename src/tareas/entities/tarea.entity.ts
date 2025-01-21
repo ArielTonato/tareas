@@ -19,16 +19,14 @@ export class Tarea {
     @Column()
     adjunto_url: string;
 
-    @IsOptional()
     @Column()
-    tarea_realizada_url?: string;
+    tarea_realizada_url: string;
 
-    @IsOptional()
     @Column()
-    @IsNumber()
-    costo?: number;
+    costo: number;
 
-    @Column({type:"timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP"})    fecha_envio: Date;
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" }) 
+    fecha_envio: Date;
 
     @Column(
         {
@@ -42,5 +40,5 @@ export class Tarea {
             type: "date",
         }
     )
-    fecha_realizada: Date;  
+    fecha_realizada: Date;
 }
