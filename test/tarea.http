@@ -1,0 +1,18 @@
+###Obtener todas las tareas
+GET http://localhost:3000/api/tareas
+
+
+###Obtener tareas por estado (En Revisión, Aprobada, En Progreso, Finalizado)
+GET http://localhost:3000/api/tareas/estado/Aprobada
+
+
+###Obtener el total de tareas por estado
+GET http://localhost:3000/api/tareas/totales
+
+###Actualizar tarea
+PUT http://localhost:3000/api/tareas/1
+content-type: application/json
+
+{
+    "estado": "Finaliza2do"
+}

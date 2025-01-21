@@ -3,13 +3,14 @@ import { TareasService } from './tareas.service';
 import { CreateTareaDto } from './dto/create-tarea.dto';
 import { UpdateTareaDto } from './dto/update-tarea.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
 
 @Controller('tareas')
 export class TareasController {
-  constructor(private readonly tareasService: TareasService) {}
+  constructor(private readonly tareasService: TareasService) { }
 
   @Post()
-  @UseInterceptors(FileInterceptor('adjunto'))  // Changed to single file
+  @UseInterceptors(FileInterceptor('adjunto'))
   create(
     @Body() createTareaDto: CreateTareaDto,
     @UploadedFile(
@@ -34,14 +35,45 @@ export class TareasController {
     return this.tareasService.findAll();
   }
 
+  @Get('estado/:estado')
+  findByEstado(@Param('estado') estado: EstadoTarea) {
+    return this.tareasService.findByEstado(estado);
+  }
+
+  @Get('totales')
+  getTotalByEstado() {
+    return this.tareasService.getTotalByEstado();
+  }
+
+  // @Get('user/:userId')
+  // findByUser(@Param('userId') userId: number) {
+  //     return this.tareasService.findByUser(userId);
+  // }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.tareasService.findOne(+id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateTareaDto: UpdateTareaDto) {
-    return this.tareasService.update(+id, updateTareaDto);
+  @UseInterceptors(FileInterceptor('tarea_realizada'))
+  update(
+    @Param('id') id: string,
+    @Body() updateTareaDto: UpdateTareaDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 8 }),
+          new FileTypeValidator({ fileType: 'application/pdf' })
+        ],
+        fileIsRequired: false, // Make file optional
+        exceptionFactory: (errors) => {
+          throw new BadRequestException('El archivo debe ser un PDF menor a 8MB');
+        }
+      })
+    ) file?: Express.Multer.File,
+  ) {
+    return this.tareasService.update(+id, updateTareaDto, file);
   }
 
   @Delete(':id')
