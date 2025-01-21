@@ -5,6 +5,8 @@ import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcryptjs';
 import { RegisterDto } from './dto/register.dto';
 import { ActiveUserInterface } from 'src/common/interfaces/ActiveUser.interface';
+import { Rol } from 'src/common/enums/roles.enum';
+import { Instituciones } from 'src/common/enums/instituciones.enum';
 
 @Injectable()
 export class AuthService {
@@ -29,7 +31,6 @@ export class AuthService {
 
   async register(userRegister:RegisterDto){
     const user = await this.validateUser(userRegister);
-    console.log(user);
     await this.usuarioService.create({
       ...user,
       password: await bcrypt.hash(userRegister.password, 10)
@@ -62,6 +63,32 @@ export class AuthService {
         throw new BadRequestException('Ya existe un usuario con ese número de teléfono');
     }
     return user
+  }
+
+  async validateGoogleUser(profile: any) {
+    const { email, firstName, lastName, picture } = profile;
+    let user = await this.usuarioService.findOneByEmail(email);
+    if (!user) {
+      user = await this.usuarioService.create({
+        nombre_usuario: email.split('@')[0],
+        nombre: firstName,
+        apellido: lastName,
+        correo: email,
+        numero: '',
+        carrera: '',
+        institucion: Instituciones.INDEPENDIENTE,
+        password: '',
+        rol: Rol.CLIENTE,
+      });
+    }
+    return {
+      usuario_id: user.usuario_id,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      rol: user.rol,
+      correo: user.correo,
+      numero: user.numero,
+    };
   }
 
   generateJwt(payload: any): string {

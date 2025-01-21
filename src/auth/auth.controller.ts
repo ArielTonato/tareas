@@ -33,8 +33,17 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(PassportAuthGuard('google'))
-  googleAuthRedirect(@Req() req, @Res() res) {
-    const token = this.authService.generateJwt(req.user);
-    res.redirect(`http://localhost:3000?token=${token}`);
+  async googleAuthRedirect(@Req() req, @Res() res) {
+    const user = await this.authService.validateGoogleUser(req.user);
+    const payload = {
+      id: user.usuario_id,
+      nombre: user.nombre,
+      apellido: user.apellido,
+      rol: user.rol,
+      correo: user.correo,
+      numero: user.numero,
+    };
+    const token = this.authService.generateJwt(payload);
+    res.redirect(`${process.env.REDIRECTION_URL}?token=${token}`);
   }
 }
