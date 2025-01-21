@@ -17,11 +17,11 @@ export class UsuarioService {
   }
 
   findAll() {
-    return `This action returns all usuario`;
+    return this.usuarioRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+    return this.usuarioRepository.findOneBy({ usuario_id: id });
   }
 
   update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
@@ -31,4 +31,6 @@ export class UsuarioService {
   remove(id: number) {
     return `This action removes a #${id} usuario`;
   }
+
+  
 }

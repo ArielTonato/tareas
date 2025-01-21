@@ -1,2 +1,18 @@
-###
+###Obtener todos los usuarios
 GET http://localhost:3000/api/usuario
+
+
+###Crear un nuevo usuario
+POST http://localhost:3000/api/usuario
+content-type: application/json
+
+{
+    "nombre_usuario":"usuario1",
+    "nombre":"usuario",
+    "apellido":"apellido",
+    "institucion":"universidad",
+    "numero":"0988850126",
+    "carrera":"carrera",
+    "correo":"DxwWt@example.com",
+    "password":"123456"
+}
