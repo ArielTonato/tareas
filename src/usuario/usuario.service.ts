@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
@@ -20,18 +20,21 @@ export class UsuarioService {
     return this.usuarioRepository.find();
   }
 
+  async findOneWithOutPassword(id: number) {
+    const user = await this.findOne(id);
+    if(!user){
+      throw new NotFoundException('El usuario no existe');
+    }
+    return user;
+  }
   findOne(id: number) {
     return this.usuarioRepository.findOneBy({ usuario_id: id });
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    try{
       await this.validateUser(id, updateUsuarioDto);
       this.usuarioRepository.update({ usuario_id: id }, updateUsuarioDto);
       return { message: "Usuario actualizado" }
-    }catch(error){
-      throw new BadRequestException(error);
-    }
   }
 
   async remove(id: number) {

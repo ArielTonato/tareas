@@ -38,7 +38,9 @@ export class Usuario {
     })
     institucion: string;
 
-    @Column()
+    @Column({
+        select: false
+    })
     password: string;
 
     @Column({
