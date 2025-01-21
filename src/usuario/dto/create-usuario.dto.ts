@@ -1,6 +1,6 @@
 import { IsEmail, IsEnum, IsOptional, IsPhoneNumber, Matches, MinLength } from "class-validator";
-import { Instituciones } from "src/common/instituciones.enum";
-import { Rol } from "src/common/roles.enum";
+import { Instituciones } from "src/common/enums/instituciones.enum";
+import { Rol } from "src/common/enums/roles.enum";
 
 
 export class CreateUsuarioDto {
