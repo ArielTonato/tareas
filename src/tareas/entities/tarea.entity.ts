@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
 import { IsNumber, IsOptional } from 'class-validator';
+import { TipoTarea } from 'src/common/enums/tipos-tarea.enum';
 
 @Entity()
 export class Tarea {
@@ -10,19 +11,33 @@ export class Tarea {
     @Column()
     nombre: string;
 
-    @Column()
-    descripcion: string;
+    @Column({
+        type: 'enum',
+        enum: TipoTarea,
+        default: TipoTarea.TAREA
+    })
+    tipo_tarea: TipoTarea;
 
     @Column()
+    indicaciones: string;
+
+    @Column()
+    rubrica: string;
+
+    @Column({
+        type: 'enum',
+        enum: EstadoTarea,
+        default: EstadoTarea.EN_REVISION
+    })
     estado: EstadoTarea;
 
     @Column()
     adjunto_url: string;
 
-    @Column()
+    @Column({nullable: true})
     tarea_realizada_url: string;
 
-    @Column()
+    @Column({nullable: true})
     costo: number;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" }) 
@@ -31,6 +46,7 @@ export class Tarea {
     @Column(
         {
             type: "date",
+            nullable: true
         }
     )
     fecha_a_realizar: Date;
@@ -38,6 +54,7 @@ export class Tarea {
     @Column(
         {
             type: "date",
+            nullable: true
         }
     )
     fecha_realizada: Date;

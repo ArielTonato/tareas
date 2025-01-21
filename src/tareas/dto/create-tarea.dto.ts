@@ -1,18 +1,28 @@
 import { IsString, IsEnum, IsOptional, IsNumber, IsUrl, IsDateString } from 'class-validator';
 import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
+import { TipoTarea } from 'src/common/enums/tipos-tarea.enum';
 
 export class CreateTareaDto {
     @IsString()
     nombre: string;
 
+    @IsEnum(TipoTarea)
+    @IsOptional()
+    tipo_tarea?: TipoTarea;
+
     @IsString()
-    descripcion: string;
+    indicaciones: string;
+
+    @IsString()
+    rubrica: string;
 
     @IsEnum(EstadoTarea)
-    estado: EstadoTarea;
+    @IsOptional()
+    estado?: EstadoTarea;
 
+    @IsOptional()
     @IsUrl()
-    adjunto_url: string;
+    adjunto_url?: string;
 
     @IsOptional()
     @IsUrl()
