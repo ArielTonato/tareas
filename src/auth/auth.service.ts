@@ -6,14 +6,12 @@ import * as bcrypt from 'bcryptjs';
 import { RegisterDto } from './dto/register.dto';
 import { ActiveUserInterface } from 'src/common/interfaces/ActiveUser.interface';
 
-
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usuarioService: UsuarioService,
     private readonly jwtService: JwtService
   ) {}
-
 
   async login({nombre_usuario, password}: LoginDto) {
     const user = await this.usuarioService.findByUserNameAndPassword(nombre_usuario);
@@ -25,12 +23,13 @@ export class AuthService {
       throw new BadRequestException('Credenciales incorrectas o usuario no encontrado');
     }
     const payload = {id:user.usuario_id, nombre: user.nombre, apellido: user.apellido, rol: user.rol, correo: user.correo, numero: user.numero};
-    const token = this.jwtService.sign(payload);
+    const token = this.generateJwt(payload);
     return {token};
   }
 
   async register(userRegister:RegisterDto){
     const user = await this.validateUser(userRegister);
+    console.log(user);
     await this.usuarioService.create({
       ...user,
       password: await bcrypt.hash(userRegister.password, 10)
@@ -42,9 +41,10 @@ export class AuthService {
   async profile(
     {correo: email}:ActiveUserInterface
   ) {
-    const {usuario_id, nombre, apellido, correo, rol, numero} = await this.usuarioService.findOneByEmail(email);
+    const {usuario_id, nombre, apellido, correo, rol, numero, carrera, institucion, nombre_usuario} = await this.usuarioService.findOneByEmail(email);
     return { 
-      usuario_id, nombre, apellido, rol, numero, correo
+      usuario_id, nombre, apellido, rol, numero, correo,
+      carrera, institucion, nombre_usuario
     }
   }
 
@@ -62,5 +62,9 @@ export class AuthService {
         throw new BadRequestException('Ya existe un usuario con ese número de teléfono');
     }
     return user
+  }
+
+  generateJwt(payload: any): string {
+    return this.jwtService.sign(payload);
   }
 }

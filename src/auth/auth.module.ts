@@ -4,6 +4,8 @@ import { AuthController } from './auth.controller';
 import { UsuarioModule } from 'src/usuario/usuario.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -17,9 +19,10 @@ import { ConfigModule } from '@nestjs/config';
       global: true,
       secret: process.env.jwtSecret,
       signOptions: { expiresIn: '1d' },
-    })
+    }),
+    PassportModule
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, GoogleStrategy],
 })
 export class AuthModule {}
