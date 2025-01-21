@@ -4,6 +4,7 @@ import { UsuarioService } from 'src/usuario/usuario.service';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcryptjs';
 import { RegisterDto } from './dto/register.dto';
+import { ActiveUserInterface } from 'src/common/interfaces/ActiveUser.interface';
 
 
 @Injectable()
@@ -36,6 +37,15 @@ export class AuthService {
     });
 
     return {message: "Usuario registrado correctamente"};
+  }
+
+  async profile(
+    {correo: email}:ActiveUserInterface
+  ) {
+    const {usuario_id, nombre, apellido, correo, rol, numero} = await this.usuarioService.findOneByEmail(email);
+    return { 
+      usuario_id, nombre, apellido, rol, numero, correo
+    }
   }
 
   async validateUser(user:RegisterDto) {
