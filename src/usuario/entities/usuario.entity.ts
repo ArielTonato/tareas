@@ -1,3 +1,4 @@
+import { Instituciones } from "src/common/instituciones.enum";
 import { Rol } from "src/common/roles.enum";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
@@ -17,12 +18,25 @@ export class Usuario {
     @Column()
     apellido: string;
 
+    @Column()
+    numero: string;
+
+    @Column()
+    carrera: string;
+
     @Column(
         {
             unique:true
         }
     )
     correo: string;
+
+    @Column({
+        type: 'enum',
+        default: Instituciones.UNIVERSIDAD,
+        enum: Instituciones
+    })
+    institucion: string;
 
     @Column()
     password: string;
