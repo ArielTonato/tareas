@@ -53,6 +53,10 @@ export class AuthService {
     if(userExists){
         throw new BadRequestException('Ya existe un usuario con ese correo');
     }
+    const userNameExists = await this.usuarioService.findByUserName(user.nombre_usuario);
+    if(userNameExists){
+        throw new BadRequestException('Ya existe un usuario con ese nombre de usuario');
+    }
     const userExistsPhone = await this.usuarioService.findOneByCellPhone(user.numero);
     if(userExistsPhone){
         throw new BadRequestException('Ya existe un usuario con ese número de teléfono');

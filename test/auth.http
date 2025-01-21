@@ -1,0 +1,28 @@
+###Registro de usuario
+POST http://localhost:3000/api/auth/registro
+content-type: application/json
+
+{
+    "nombre_usuario": "usuario2",
+    "nombre": "usuario",
+    "apellido": "apellido",
+    "numero": "0988851126",
+    "carrera": "carrera",
+    "correo": "DxwWtw@example.com",
+    "institucion": "universidad",
+    "password": "123456"
+}
+
+###Inicio de sesion
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+
+{
+    "nombre_usuario": "usuario2",
+    "password": "123456"
+}
+
+
+###Obtener el perfil del usuario
+GET http://localhost:3000/api/auth/perfil
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibm9tYnJlIjoidXN1YXJpbyIsImFwZWxsaWRvIjoiYXBlbGxpZG8iLCJyb2wiOiJjbGllbnRlIiwiY29ycmVvIjoiRHh3V3R3QGV4YW1wbGUuY29tIiwiaWF0IjoxNzM3NDg1OTQ4LCJleHAiOjE3Mzc1NzIzNDh9.etFaahdUvU70f2-TMyjvZVZXRzOCidR2mYI9BsihGIU

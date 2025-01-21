@@ -15,12 +15,12 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
-  @Post('register')
+  @Post('registro')
   register(@Body() userRegister:RegisterDto) {
     return this.authService.register(userRegister);
   }
 
-  @Get('profile')
+  @Get('perfil')
   @UseGuards(AuthGuard)
   profile(@ActiveUser() user:ActiveUserInterface) {
     return this.authService.profile(user);

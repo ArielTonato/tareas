@@ -56,6 +56,10 @@ export class UsuarioService {
     return this.usuarioRepository.findOneBy({ correo });
   }
 
+  async findByUserName(userName: string) {
+    return this.usuarioRepository.findOneBy({ nombre_usuario: userName });
+  }
+
   async findOneByCellPhone(numero: string) {
     return this.usuarioRepository.findOneBy({ numero });
   }
@@ -64,6 +68,10 @@ export class UsuarioService {
     const userE = await this.usuarioRepository.findOneBy({ usuario_id: id });
     if (!userE) {
       throw new BadRequestException('El usuario no existe');
+    }
+    const userNameExists = await this.findByUserName(user.nombre_usuario);
+    if (userNameExists && userNameExists.usuario_id !== id) {
+      throw new BadRequestException('Ya existe un usuario con ese nombre de usuario');
     }
     const userExists = await this.findOneByEmail(user.correo);
     if (userExists && userExists.usuario_id !== id) {
