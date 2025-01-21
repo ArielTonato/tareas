@@ -46,6 +46,12 @@ export class UsuarioService {
     return { message: "Usuario eliminado" };
   }
 
+  findByUserNameAndPassword(userName: string, password: string) {
+    return this.usuarioRepository.findOne({
+      where: { nombre_usuario: userName },
+      select: ['usuario_id','correo', 'password', "nombre", "apellido", "rol"]
+    })  }
+
   async findOneByEmail(correo: string) {
     return this.usuarioRepository.findOneBy({ correo });
   }
@@ -53,7 +59,6 @@ export class UsuarioService {
   async findOneByCellPhone(numero: string) {
     return this.usuarioRepository.findOneBy({ numero });
   }
-
 
   async validateUser(id: number, user: UpdateUsuarioDto) {
     const userE = await this.usuarioRepository.findOneBy({ usuario_id: id });
