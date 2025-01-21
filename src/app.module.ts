@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
 import { TareasModule } from './tareas/tareas.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -23,7 +24,8 @@ import { TareasModule } from './tareas/tareas.module';
     ),
     UsuarioModule,
     AuthModule,
-    TareasModule
+    TareasModule, 
+    CloudinaryModule
   ],
   controllers: [],
   providers: [],
