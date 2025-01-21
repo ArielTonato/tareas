@@ -2,13 +2,13 @@
 GET http://localhost:3000/api/usuario
 
 ###Obtener un usuario
-GET http://localhost:3000/api/usuario/1
+GET http://localhost:3000/api/usuario/7
 ### Para crear un nuevo usuario se hace desde el auth
 
 ###Actualizar un usuario
-PUT http://localhost:3000/api/usuario/12
+PUT http://localhost:3000/api/usuario/7
 content-type: application/json
 
 {
-    "rol": "cliente"
+    "password": "123333"
 }
