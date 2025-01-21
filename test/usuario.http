@@ -16,3 +16,11 @@ content-type: application/json
     "correo":"DxwWt@example.com",
     "password":"123456"
 }
+
+###Actualizar un usuario
+PUT http://localhost:3000/api/usuario/1
+content-type: application/json
+
+{
+    "rol": "cliente"
+}
