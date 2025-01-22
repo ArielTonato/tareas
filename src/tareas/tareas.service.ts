@@ -123,15 +123,18 @@ export class TareasService {
       }
 
       const comprobante = await this.comprobanteService.findOne(id);
-      if (updateTareaDto.estado === EstadoTarea.CANCELADA && comprobante.estado_comprobante === EstadoComprobante.RECHAZADO) {
-        throw new BadRequestException('El comprobante no puede ser cancelado porque ya fue rechazado');
-      }
+      console.log(comprobante);
+      if (comprobante) {
+        if (updateTareaDto.estado === EstadoTarea.CANCELADA && comprobante.estado_comprobante === EstadoComprobante.RECHAZADO) {
+          throw new BadRequestException('El comprobante no puede ser cancelado porque ya fue rechazado');
+        }
 
-      if (updateTareaDto.estado === EstadoTarea.CANCELADA && comprobante.estado_comprobante === EstadoComprobante.APROBADO) {
-        throw new BadRequestException('El comprobante no puede ser cancelado porque ya fue aprobado'); {
+        if (updateTareaDto.estado === EstadoTarea.CANCELADA && comprobante.estado_comprobante === EstadoComprobante.APROBADO) {
+          throw new BadRequestException('El comprobante no puede ser cancelado porque ya fue aprobado'); {
+          }
         }
       }
-
+      
       if (file) {
         const uploadResult = await this.cloudinaryService.upload(file);
         updateTareaDto.tarea_realizada_url = uploadResult.secure_url;

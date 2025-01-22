@@ -7,6 +7,7 @@ import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
 import { TareasService } from 'src/tareas/tareas.service';
 import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
+import { EstadoComprobante } from 'src/common/enums/estado-comprobante.enum';
 
 @Injectable()
 export class ComprobanteService {
@@ -20,12 +21,6 @@ export class ComprobanteService {
   async create(createComprobanteDto: CreateComprobanteDto, file : Express.Multer.File) {
     try{
       const uploadResult = await this.cloudinaryService.upload(file);
-      // const tarea = await this.tareasService.findOne(createComprobanteDto.id_tarea);
-      // if(!tarea){
-      //   throw new NotFoundException('Tarea no encontrada');
-      // }
-      // tarea.estado = EstadoTarea.APROBADA;
-      // await this.tareasService.update(createComprobanteDto.id_tarea, tarea);
       return this.comprobanteRepository.save({
         ...createComprobanteDto,
         url_comprobante: uploadResult.secure_url
@@ -43,8 +38,25 @@ export class ComprobanteService {
     return this.comprobanteRepository.findOne({ where: { id_comprobante: id } });
   }
 
-  update(id: number, updateComprobanteDto: UpdateComprobanteDto) {
-    return `This action updates a #${id} comprobante`;
+  async update(id: number, updateComprobanteDto: UpdateComprobanteDto) {
+    if (updateComprobanteDto.estado_comprobante === EstadoComprobante.APROBADO) {
+      const tarea = await this.tareasService.findOne(id);
+      if (!tarea) {
+        throw new NotFoundException(`Tarea con ID ${id} no encontrada`);
+      }
+      tarea.estado = EstadoTarea.APROBADA;
+      await this.tareasService.update(id, tarea);
+      return this.comprobanteRepository.update(id, updateComprobanteDto);
+    }else if (updateComprobanteDto.estado_comprobante === EstadoComprobante.RECHAZADO) {
+      const tarea = await this.tareasService.findOne(id);
+      if (!tarea) {
+        throw new NotFoundException(`Tarea con ID ${id} no encontrada`);
+      }
+      tarea.estado = EstadoTarea.RECHAZADA;
+      await this.tareasService.update(id, tarea);
+      return this.comprobanteRepository.update(id, updateComprobanteDto);
+    }
+    return this.comprobanteRepository.update(id, updateComprobanteDto);
   }
 
   remove(id: number) {
