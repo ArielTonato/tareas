@@ -35,6 +35,7 @@ export class CreateTareaDto {
 
     @IsOptional()
     @IsNumber()
+    @Type(() => Number)
     costo?: number;
 
     @IsDateString()

@@ -112,7 +112,7 @@ export class TareasService {
       if (file) {
         const uploadResult = await this.cloudinaryService.upload(file);
         updateTareaDto.tarea_realizada_url = uploadResult.secure_url;
-        updateTareaDto.estado = EstadoTarea.EN_REVISION;
+        updateTareaDto.estado = EstadoTarea.FINALIZADO;
         updateTareaDto.fecha_realizada = new Date();
       }
 
