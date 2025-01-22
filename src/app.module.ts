@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { TareasModule } from './tareas/tareas.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ComentariosModule } from './comentarios/comentarios.module';
+import { ComprobanteModule } from './comprobante/comprobante.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,7 +27,7 @@ import { ComentariosModule } from './comentarios/comentarios.module';
     UsuarioModule,
     AuthModule,
     TareasModule, 
-    CloudinaryModule, ComentariosModule
+    CloudinaryModule, ComentariosModule, ComprobanteModule
   ],
   controllers: [],
   providers: [],
