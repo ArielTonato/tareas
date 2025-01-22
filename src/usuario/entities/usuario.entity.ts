@@ -1,3 +1,4 @@
+import { Comentario } from "src/comentarios/entities/comentario.entity";
 import { Instituciones } from "src/common/enums/instituciones.enum";
 import { Rol } from "src/common/enums/roles.enum";
 import { Tarea } from "src/tareas/entities/tarea.entity";
@@ -53,4 +54,7 @@ export class Usuario {
 
     @OneToMany(() => Tarea, tarea => tarea.usuario)
     tareas: Tarea[];
+
+    @OneToMany(() => Comentario, comentario => comentario.id_usuario)
+    comentarios: Comentario[];
 }

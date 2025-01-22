@@ -3,6 +3,7 @@ import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
 import { IsNumber, IsOptional } from 'class-validator';
 import { TipoTarea } from 'src/common/enums/tipos-tarea.enum';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { Comentario } from 'src/comentarios/entities/comentario.entity';
 
 @Entity()
 export class Tarea {
@@ -42,13 +43,13 @@ export class Tarea {
     @Column()
     adjunto_url: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     tarea_realizada_url: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     costo: number;
 
-    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" }) 
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
     fecha_envio: Date;
 
     @Column(
@@ -66,4 +67,7 @@ export class Tarea {
         }
     )
     fecha_realizada: Date;
+    
+    @OneToMany(() => Comentario, comentario => comentario.tarea)
+    comentarios: Comentario[];
 }
