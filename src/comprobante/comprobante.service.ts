@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateComprobanteDto } from './dto/create-comprobante.dto';
 import { UpdateComprobanteDto } from './dto/update-comprobante.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,6 +14,7 @@ export class ComprobanteService {
     @InjectRepository(Comprobante)
     private readonly comprobanteRepository: Repository<Comprobante>,
     private readonly cloudinaryService: CloudinaryService,
+    @Inject(forwardRef(() => TareasService))
     private readonly tareasService: TareasService,
   ) {}
   async create(createComprobanteDto: CreateComprobanteDto, file : Express.Multer.File) {
@@ -39,7 +40,7 @@ export class ComprobanteService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} comprobante`;
+    return this.comprobanteRepository.findOne({ where: { id_comprobante: id } });
   }
 
   update(id: number, updateComprobanteDto: UpdateComprobanteDto) {
