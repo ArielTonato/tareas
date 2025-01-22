@@ -1,11 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateComprobanteDto } from './dto/create-comprobante.dto';
 import { UpdateComprobanteDto } from './dto/update-comprobante.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Comprobante } from './entities/comprobante.entity';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ComprobanteService {
-  create(createComprobanteDto: CreateComprobanteDto) {
-    return 'This action adds a new comprobante';
+  constructor(
+    @InjectRepository(Comprobante)
+    private readonly comprobanteRepository: Repository<Comprobante>,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
+  async create(createComprobanteDto: CreateComprobanteDto, file : Express.Multer.File) {
+    try{
+      const uploadResult = await this.cloudinaryService.upload(file);
+      return this.comprobanteRepository.save({
+        ...createComprobanteDto,
+        adjunto_url: uploadResult.secure_url
+      });
+    }catch(err){
+      throw new Error('Error al crear comprobante');
+    }
   }
 
   findAll() {
