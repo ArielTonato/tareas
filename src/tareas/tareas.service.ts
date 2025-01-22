@@ -44,18 +44,21 @@ export class TareasService {
   }
 
   findAll() {
-    return this.tareaRepository.find();
+    return this.tareaRepository.find({
+      relations: ['comentarios',"encuestas"]
+    });
   }
 
   findOne(id: number) {
-    return this.tareaRepository.findOne({ where: { id } });
+    return this.tareaRepository.findOne({ where: { id }, relations: ['comentarios', 'encuestas'] });
   }
 
   async findByEstado(estado: EstadoTarea) {
     try {
       const tareas = await this.tareaRepository.find({
         where: { estado },
-        order: { fecha_envio: 'DESC' }
+        order: { fecha_envio: 'DESC' },
+        relations: ['comentarios', 'encuestas']
       });
 
       if (!tareas.length) {
@@ -90,7 +93,8 @@ export class TareasService {
     try {
       const tareas = await this.tareaRepository.find({
         where: { usuario_cliente_id: userId },
-        order: { fecha_envio: 'DESC' }
+        order: { fecha_envio: 'DESC' },
+        relations: ['comentarios', 'encuestas']
       });
 
       if (!tareas.length) {

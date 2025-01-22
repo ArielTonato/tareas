@@ -1,0 +1,11 @@
+###Realizar encuesta
+POST http://localhost:3000/api/encuesta
+content-type: application/json
+
+{
+    "id_tarea": 6,
+    "atencion": "Buena",
+    "costo": "Normal",
+    "calidad": "Excelente",
+    "nota": 5
+}

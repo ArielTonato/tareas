@@ -1,12 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Atencion } from "../enums/atencion.enum";
 import { Costo } from "../enums/costo.enum";
 import { Calidad } from "../enums/calidad.enum";
+import { Tarea } from "src/tareas/entities/tarea.entity";
 
 @Entity()
 export class Encuesta {
     @PrimaryGeneratedColumn()
     encuesta_id: number;
+
+    @ManyToOne(() => Tarea, tarea => tarea.encuestas)
+    @JoinColumn({ name: 'id_tarea' })
+    tarea: Tarea;
 
     @Column()
     id_tarea: number;

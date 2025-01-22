@@ -4,6 +4,7 @@ import { IsNumber, IsOptional } from 'class-validator';
 import { TipoTarea } from 'src/common/enums/tipos-tarea.enum';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { Comentario } from 'src/comentarios/entities/comentario.entity';
+import { Encuesta } from 'src/encuesta/entities/encuesta.entity';
 
 @Entity()
 export class Tarea {
@@ -70,4 +71,7 @@ export class Tarea {
     
     @OneToMany(() => Comentario, comentario => comentario.tarea)
     comentarios: Comentario[];
+
+    @OneToMany(() => Encuesta, encuesta => encuesta.tarea)
+    encuestas: Encuesta[];
 }
