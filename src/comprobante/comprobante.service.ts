@@ -18,14 +18,15 @@ export class ComprobanteService {
     @Inject(forwardRef(() => TareasService))
     private readonly tareasService: TareasService,
   ) {}
-  async create(createComprobanteDto: CreateComprobanteDto, file : Express.Multer.File) {
-    try{
+
+  async create(createComprobanteDto: CreateComprobanteDto, file: Express.Multer.File) {
+    try {
       const uploadResult = await this.cloudinaryService.upload(file);
       return this.comprobanteRepository.save({
         ...createComprobanteDto,
-        url_comprobante: uploadResult.secure_url
+        url_comprobante: uploadResult.secure_url,
       });
-    }catch(err){
+    } catch (err) {
       throw new Error('Error al crear comprobante');
     }
   }
@@ -39,27 +40,28 @@ export class ComprobanteService {
   }
 
   async update(id: number, updateComprobanteDto: UpdateComprobanteDto) {
-    if (updateComprobanteDto.estado_comprobante === EstadoComprobante.APROBADO) {
-      const tarea = await this.tareasService.findOne(id);
-      if (!tarea) {
-        throw new NotFoundException(`Tarea con ID ${id} no encontrada`);
-      }
-      tarea.estado = EstadoTarea.APROBADA;
-      await this.tareasService.update(id, tarea);
-      return this.comprobanteRepository.update(id, updateComprobanteDto);
-    }else if (updateComprobanteDto.estado_comprobante === EstadoComprobante.RECHAZADO) {
-      const tarea = await this.tareasService.findOne(id);
-      if (!tarea) {
-        throw new NotFoundException(`Tarea con ID ${id} no encontrada`);
-      }
-      tarea.estado = EstadoTarea.RECHAZADA;
-      await this.tareasService.update(id, tarea);
-      return this.comprobanteRepository.update(id, updateComprobanteDto);
+    const comprobante = await this.comprobanteRepository.findOne({ where: { id_comprobante: id } });
+    if (!comprobante) {
+      throw new NotFoundException(`Comprobante con ID ${id} no encontrada`);
     }
+
+    await this.updateTareaEstado(comprobante.id_tarea, updateComprobanteDto.estado_comprobante);
+    updateComprobanteDto.fecha_revision = new Date();
     return this.comprobanteRepository.update(id, updateComprobanteDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comprobante`;
+  private async updateTareaEstado(id_tarea: number, estado_comprobante: EstadoComprobante) {
+    const tarea = await this.tareasService.findOne(id_tarea);
+    if (!tarea) {
+      throw new NotFoundException(`Tarea con ID ${id_tarea} no encontrada`);
+    }
+
+    if (estado_comprobante === EstadoComprobante.APROBADO) {
+      tarea.estado = EstadoTarea.APROBADA;
+    } else if (estado_comprobante === EstadoComprobante.RECHAZADO) {
+      tarea.estado = EstadoTarea.RECHAZADA;
+    }
+
+    await this.tareasService.update(id_tarea, tarea);
   }
 }

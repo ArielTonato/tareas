@@ -43,9 +43,4 @@ export class ComprobanteController {
   update(@Param('id') id: string, @Body() updateComprobanteDto: UpdateComprobanteDto) {
     return this.comprobanteService.update(+id, updateComprobanteDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.comprobanteService.remove(+id);
-  }
 }

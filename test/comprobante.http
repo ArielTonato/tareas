@@ -2,9 +2,10 @@ GET http://localhost:3000/api/comprobante
 
 
 ###Actualizar comprobante
-PUT http://localhost:3000/api/comprobante/1
+PUT http://localhost:3000/api/comprobante/2
 content-type: application/json
 
 {
-    "estado_comprobante": "Aprobado"
+    "estado_comprobante": "Rechazado",
+    "comentario":"Esto es un comentario"
 }
