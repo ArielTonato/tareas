@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { EncuestaService } from './encuesta.service';
 import { CreateEncuestaDto } from './dto/create-encuesta.dto';
-import { UpdateEncuestaDto } from './dto/update-encuesta.dto';
 
 @Controller('encuesta')
 export class EncuestaController {
@@ -22,13 +21,9 @@ export class EncuestaController {
     return this.encuestaService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEncuestaDto: UpdateEncuestaDto) {
-    return this.encuestaService.update(+id, updateEncuestaDto);
+  @Get('tarea/:id')
+  findOneByTarea(@Param('id') id: string) {
+    return this.encuestaService.findOneByTarea(+id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.encuestaService.remove(+id);
-  }
 }
