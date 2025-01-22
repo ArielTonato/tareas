@@ -9,5 +9,5 @@ content-type: application/json
 }
 
 
-###Obtener comentarios de un usuario
+###Obtener comentarios de una tarea
 GET http://localhost:3000/api/comentarios/tarea/3
