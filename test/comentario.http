@@ -1,0 +1,13 @@
+###Crear comentario
+POST http://localhost:3000/api/comentarios
+content-type: application/json
+
+{
+    "id_tarea": 3,
+    "id_usuario": 4,
+    "comentario": "Esto es la respuesta a un comentario"
+}
+
+
+###Obtener comentarios de un usuario
+GET http://localhost:3000/api/comentarios/tarea/3

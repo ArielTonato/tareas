@@ -12,14 +12,10 @@ export class ComentariosController {
     return this.comentariosService.create(createComentarioDto);
   }
 
-  @Get()
-  findAll() {
-    return this.comentariosService.findAll();
-  }
 
-  @Get(':id')
+  @Get('tarea/:id')
   findOne(@Param('id') id: string) {
-    return this.comentariosService.findOne(+id);
+    return this.comentariosService.findByTarea(+id);
   }
 
   @Patch(':id')

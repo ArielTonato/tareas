@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { UpdateComentarioDto } from './dto/update-comentario.dto';
 import { Comentario } from './entities/comentario.entity';
@@ -14,15 +14,18 @@ export class ComentariosService {
   ) { }
 
   create(createComentarioDto: CreateComentarioDto) {
-    return this.comentarioRepository.save(createComentarioDto);
+    try{
+      return this.comentarioRepository.save(createComentarioDto);
+    }catch(err){
+      throw new BadRequestException('Error al crear comentario');
+    }
   }
 
-  findAll() {
-    return `This action returns all comentarios`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} comentario`;
+  findByTarea(id: number) {
+    return this.comentarioRepository.find({
+      where: { id_tarea: id },
+      order: { fecha_comentario: 'ASC' }
+    });
   }
 
   update(id: number, updateComentarioDto: UpdateComentarioDto) {
