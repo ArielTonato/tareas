@@ -1,6 +1,7 @@
 import { Instituciones } from "src/common/enums/instituciones.enum";
 import { Rol } from "src/common/enums/roles.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Tarea } from "src/tareas/entities/tarea.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Usuario {
@@ -49,4 +50,7 @@ export class Usuario {
         enum: Rol
     })
     rol: Rol;
+
+    @OneToMany(() => Tarea, tarea => tarea.usuario)
+    tareas: Tarea[];
 }

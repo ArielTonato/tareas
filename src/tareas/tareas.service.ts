@@ -83,22 +83,22 @@ export class TareasService {
     }
   }
   
-//   async findByUser(userId: number) {
-//     try {
-//         const tareas = await this.tareaRepository.find({
-//             where: { usuario_cliente_id: userId },
-//             order: { fecha_envio: 'DESC' }
-//         });
+  async findByUser(userId: number) {
+    try {
+        const tareas = await this.tareaRepository.find({
+            where: { usuario_cliente_id: userId },
+            order: { fecha_envio: 'DESC' }
+        });
 
-//         if (!tareas.length) {
-//             throw new NotFoundException(`No se encontraron tareas para el usuario: ${userId}`);
-//         }
+        if (!tareas.length) {
+            throw new NotFoundException(`No se encontraron tareas para el usuario: ${userId}`);
+        }
 
-//         return tareas;
-//     } catch (error) {
-//         throw new BadRequestException('Error al buscar tareas del usuario: ' + error.message);
-//     }
-// }
+        return tareas;
+    } catch (error) {
+        throw new BadRequestException('Error al buscar tareas del usuario: ' + error.message);
+    }
+}
 
   async update(id: number, updateTareaDto: UpdateTareaDto, file?: Express.Multer.File) {
     try {

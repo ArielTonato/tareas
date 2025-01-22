@@ -1,12 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
 import { IsNumber, IsOptional } from 'class-validator';
 import { TipoTarea } from 'src/common/enums/tipos-tarea.enum';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 @Entity()
 export class Tarea {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @ManyToOne(() => Usuario, usuario => usuario.tareas)
+    @JoinColumn({ name: 'usuario_cliente_id' })
+    usuario: Usuario;
+
+    @Column()
+    usuario_cliente_id: number;
 
     @Column()
     nombre: string;

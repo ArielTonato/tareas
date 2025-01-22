@@ -45,10 +45,10 @@ export class TareasController {
     return this.tareasService.getTotalByEstado();
   }
 
-  // @Get('user/:userId')
-  // findByUser(@Param('userId') userId: number) {
-  //     return this.tareasService.findByUser(userId);
-  // }
+  @Get('usuario/:userId')
+  findByUser(@Param('userId') userId: number) {
+      return this.tareasService.findByUser(userId);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
