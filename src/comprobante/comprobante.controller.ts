@@ -19,7 +19,7 @@ export class ComprobanteController {
           ],
           exceptionFactory: (errors) => {
             if (errors === "File is required") {
-              throw new BadRequestException('Se requiere un archivo PDF');
+              throw new BadRequestException('Se requiere el comprobante en PDF');
             }
             throw new BadRequestException('El archivo debe ser un PDF');
           }

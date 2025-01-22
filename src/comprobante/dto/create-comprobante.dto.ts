@@ -1,12 +1,15 @@
+import { Type } from 'class-transformer';
 import { IsString, IsNumber, IsEnum, IsOptional } from 'class-validator';
 import { EstadoComprobante } from 'src/common/enums/estado-comprobante.enum';
 
 export class CreateComprobanteDto {
     @IsNumber()
+    @Type(() => Number)
     id_tarea: number;
 
     @IsString()
-    url_comprobante: string;
+    @IsOptional()
+    url_comprobante?: string;
 
     @IsEnum(EstadoComprobante)
     @IsOptional()

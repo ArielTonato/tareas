@@ -45,7 +45,7 @@ export class TareasService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} tarea`;
+    return  this.tareaRepository.findOne({ where: { id } });
   }
 
   async findByEstado(estado: EstadoTarea) {

@@ -17,5 +17,5 @@ PUT http://localhost:3000/api/tareas/3
 content-type: application/json
 
 {
-    "fecha_a_realizar": "2025-03-01"
+    "estado": "En Progreso"
 }

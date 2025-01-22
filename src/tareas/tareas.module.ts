@@ -14,5 +14,6 @@ import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
   ],
   controllers: [TareasController],
   providers: [TareasService],
+  exports: [TareasService]
 })
 export class TareasModule {}

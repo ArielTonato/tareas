@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateComprobanteDto } from './dto/create-comprobante.dto';
 import { UpdateComprobanteDto } from './dto/update-comprobante.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comprobante } from './entities/comprobante.entity';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
+import { TareasService } from 'src/tareas/tareas.service';
+import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
 
 @Injectable()
 export class ComprobanteService {
@@ -12,13 +14,20 @@ export class ComprobanteService {
     @InjectRepository(Comprobante)
     private readonly comprobanteRepository: Repository<Comprobante>,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly tareasService: TareasService,
   ) {}
   async create(createComprobanteDto: CreateComprobanteDto, file : Express.Multer.File) {
     try{
       const uploadResult = await this.cloudinaryService.upload(file);
+      // const tarea = await this.tareasService.findOne(createComprobanteDto.id_tarea);
+      // if(!tarea){
+      //   throw new NotFoundException('Tarea no encontrada');
+      // }
+      // tarea.estado = EstadoTarea.APROBADA;
+      // await this.tareasService.update(createComprobanteDto.id_tarea, tarea);
       return this.comprobanteRepository.save({
         ...createComprobanteDto,
-        adjunto_url: uploadResult.secure_url
+        url_comprobante: uploadResult.secure_url
       });
     }catch(err){
       throw new Error('Error al crear comprobante');
@@ -26,7 +35,7 @@ export class ComprobanteService {
   }
 
   findAll() {
-    return `This action returns all comprobante`;
+    return this.comprobanteRepository.find();
   }
 
   findOne(id: number) {

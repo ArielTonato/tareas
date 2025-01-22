@@ -9,7 +9,9 @@ export class Comprobante {
     @Column()
     id_tarea: number;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     url_comprobante: string;
 
     @Column({
