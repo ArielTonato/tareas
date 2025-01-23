@@ -1,3 +1,13 @@
+###Obtener encuestas
+GET http://localhost:3000/api/encuesta
+
+
+###Obtener encuesta por id
+GET http://localhost:3000/api/encuesta/1
+
+###Obtener encuesta por tarea
+GET http://localhost:3000/api/encuesta/tarea/6
+
 ###Realizar encuesta
 POST http://localhost:3000/api/encuesta
 content-type: application/json

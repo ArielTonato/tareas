@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEncuestaDto } from './dto/create-encuesta.dto';
 import { UpdateEncuestaDto } from './dto/update-encuesta.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -34,7 +34,11 @@ export class EncuestaService {
     return this.encuestaRepository.findOne({ where: { encuesta_id: id } });
   }
 
-  findOneByTarea(id_tarea: number) {
+  async findOneByTarea(id_tarea: number) {
+    const tarea = await this.tareasService.findOne(id_tarea);
+    if (!tarea) {
+      throw new NotFoundException(`Tarea con ID ${id_tarea} no encontrada`);
+    }
     return this.encuestaRepository.findOne({ where: { id_tarea} });
   }
 
