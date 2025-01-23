@@ -1,5 +1,8 @@
+###Obtener todos los comprobantes
 GET http://localhost:3000/api/comprobante
 
+###Obtener comprobante por tarea
+GET http://localhost:3000/api/comprobante/1
 
 ###Actualizar comprobante
 PUT http://localhost:3000/api/comprobante/2

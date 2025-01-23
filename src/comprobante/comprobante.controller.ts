@@ -39,6 +39,11 @@ export class ComprobanteController {
     return this.comprobanteService.findOne(+id);
   }
 
+  @Get('tarea/:id')
+  findByTarea(@Param('id') id: string) {
+    return this.comprobanteService.findByTarea(+id);
+  }
+
   @Put(':id')
   update(@Param('id') id: string, @Body() updateComprobanteDto: UpdateComprobanteDto) {
     return this.comprobanteService.update(+id, updateComprobanteDto);
