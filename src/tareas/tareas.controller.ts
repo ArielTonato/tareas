@@ -50,6 +50,12 @@ export class TareasController {
       return this.tareasService.findByUser(userId);
   }
 
+
+  @Get('buscar/:searchTerm')
+  search(@Param('searchTerm') searchTerm: string) {
+    return this.tareasService.searchTareas(searchTerm);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.tareasService.findOne(+id);

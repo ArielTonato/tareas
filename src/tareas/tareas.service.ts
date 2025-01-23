@@ -3,7 +3,7 @@ import { CreateTareaDto } from './dto/create-tarea.dto';
 import { UpdateTareaDto } from './dto/update-tarea.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tarea } from './entities/tarea.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
 import { ComprobanteService } from 'src/comprobante/comprobante.service';
@@ -86,6 +86,30 @@ export class TareasService {
       };
     } catch (error) {
       throw new BadRequestException('Error al obtener totales: ' + error.message);
+    }
+  }
+
+
+  async searchTareas(searchTerm: string) {
+    try {
+      const tareas = await this.tareaRepository.find({
+        where: [
+          { nombre: Like(`%${searchTerm}%`) }
+        ],
+        relations: ['comentarios', 'encuestas'],
+        order: { fecha_envio: 'DESC' }
+      });
+
+      if (!tareas.length) {
+        throw new NotFoundException(`No se encontraron tareas que coincidan con: ${searchTerm}`);
+      }
+
+      return {
+        message: 'Tareas encontradas',
+        data: tareas
+      };
+    } catch (error) {
+      throw new NotFoundException('Error al buscar tareas: ' + error.message);
     }
   }
 
