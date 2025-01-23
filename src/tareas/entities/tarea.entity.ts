@@ -50,7 +50,19 @@ export class Tarea {
     @Column({ nullable: true })
     costo: number;
 
-    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
+    @Column({ 
+        type: "timestamp", 
+        default: () => "CURRENT_TIMESTAMP", 
+        onUpdate: "CURRENT_TIMESTAMP",
+        transformer: {
+            to(value: Date): Date {
+                return value;
+            },
+            from(value: Date): Date {
+                return new Date(value.setHours(value.getHours() - 5)); // Adjusting for -5 timezone
+            }
+        }
+    })
     fecha_envio: Date;
 
     @Column(

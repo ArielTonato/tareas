@@ -3,7 +3,7 @@ import { CreateTareaDto } from './dto/create-tarea.dto';
 import { UpdateTareaDto } from './dto/update-tarea.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tarea } from './entities/tarea.entity';
-import { Like, Repository } from 'typeorm';
+import { Between, Like, Repository } from 'typeorm';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { EstadoTarea } from 'src/common/enums/estado-tarea.enum';
 import { ComprobanteService } from 'src/comprobante/comprobante.service';

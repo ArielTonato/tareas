@@ -13,7 +13,7 @@ GET http://localhost:3000/api/tareas/usuario/8
 GET http://localhost:3000/api/tareas/totales
 
 ###Buscar tareas por nombre
-GET http://localhost:3000/api/tareas/buscar/Tarea Sociales2
+GET http://localhost:3000/api/tareas/buscar/Tarea Ciencias
 
 ###Actualizar tarea
 PUT http://localhost:3000/api/tareas/3
