@@ -35,6 +35,12 @@ export class ComprobanteService {
     return this.comprobanteRepository.find();
   }
 
+  findByTarea(id: number) {
+    return this.comprobanteRepository.find({
+      where: { id_tarea: id }
+    });
+  }
+
   findOne(id: number) {
     return this.comprobanteRepository.findOne({ where: { id_comprobante: id } });
   }

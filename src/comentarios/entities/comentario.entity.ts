@@ -13,6 +13,7 @@ export class Comentario {
 
     @ManyToOne(() => Usuario, usuario => usuario.comentarios)
     @JoinColumn({ name: 'id_usuario' })
+    usuario: Usuario;
 
     @Column()
     id_tarea: number;

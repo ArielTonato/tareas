@@ -24,7 +24,8 @@ export class ComentariosService {
   findByTarea(id: number) {
     return this.comentarioRepository.find({
       where: { id_tarea: id },
-      order: { fecha_comentario: 'ASC' }
+      order: { fecha_comentario: 'ASC' },
+      relations: ['usuario']
     });
   }
 
