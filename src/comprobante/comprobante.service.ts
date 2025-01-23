@@ -36,7 +36,7 @@ export class ComprobanteService {
   }
 
   findByTarea(id: number) {
-    return this.comprobanteRepository.find({
+    return this.comprobanteRepository.findOne({
       where: { id_tarea: id }
     });
   }
