@@ -53,7 +53,8 @@ export class ComprobanteService {
 
     await this.updateTareaEstado(comprobante.id_tarea, updateComprobanteDto.estado_comprobante);
     updateComprobanteDto.fecha_revision = new Date();
-    return this.comprobanteRepository.update(id, updateComprobanteDto);
+    await this.comprobanteRepository.update(id, updateComprobanteDto);
+    return { message: "Comprobante actualizado" };
   }
 
   private async updateTareaEstado(id_tarea: number, estado_comprobante: EstadoComprobante) {

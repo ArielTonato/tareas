@@ -1,10 +1,15 @@
 import { EstadoComprobante } from "src/common/enums/estado-comprobante.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Tarea } from "src/tareas/entities/tarea.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Comprobante {
     @PrimaryGeneratedColumn()
     id_comprobante: number;
+
+    @ManyToOne(() => Tarea, tarea => tarea.comprobantes)
+    @JoinColumn({ name: 'id_tarea' })
+    tarea: Tarea;
 
     @Column()
     id_tarea: number;

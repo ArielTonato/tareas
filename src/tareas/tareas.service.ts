@@ -45,7 +45,7 @@ export class TareasService {
 
   findAll() {
     return this.tareaRepository.find({
-      relations: ['comentarios',"encuestas"]
+      relations: ['comentarios',"encuestas","comprobantes"]
     });
   }
 
@@ -118,7 +118,7 @@ export class TareasService {
       const tareas = await this.tareaRepository.find({
         where: { usuario_cliente_id: userId },
         order: { fecha_envio: 'DESC' },
-        relations: ['comentarios', 'encuestas']
+        relations: ['comentarios', 'encuestas','comprobantes']
       });
 
       if (!tareas.length) {

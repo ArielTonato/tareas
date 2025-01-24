@@ -5,6 +5,7 @@ import { TipoTarea } from 'src/common/enums/tipos-tarea.enum';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { Comentario } from 'src/comentarios/entities/comentario.entity';
 import { Encuesta } from 'src/encuesta/entities/encuesta.entity';
+import { Comprobante } from 'src/comprobante/entities/comprobante.entity';
 
 @Entity()
 export class Tarea {
@@ -86,4 +87,7 @@ export class Tarea {
 
     @OneToMany(() => Encuesta, encuesta => encuesta.tarea)
     encuestas: Encuesta[];
+
+    @OneToMany(() => Comprobante, comprobante => comprobante.tarea)
+    comprobantes: Comprobante[];
 }
