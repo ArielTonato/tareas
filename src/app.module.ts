@@ -16,11 +16,12 @@ import { EncuestaModule } from './encuesta/encuesta.module';
     TypeOrmModule.forRoot(
       {
         type: 'mysql',
-        host: process.env.dbHost,
-        port: +process.env.dbPort, //Poner el puerto de su base de datos
-        username: process.env.dbUser,
-        password: process.env.dbPassword,
-        database: process.env.dbDatabase,//Nombrar su base de esta manera
+        // host: process.env.dbHost,
+        // port: +process.env.dbPort, //Poner el puerto de su base de datos
+        // username: process.env.dbUser,
+        // password: process.env.dbPassword,
+        // database: process.env.dbDatabase,//Nombrar su base de esta manera
+        url:process.env.url,
         autoLoadEntities: true,
         synchronize: true,
       }
