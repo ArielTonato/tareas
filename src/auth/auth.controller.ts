@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, UseGuards, Req, Res } from '@nestjs/common
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { AuthGuard } from './guards/Auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { ActiveUser } from './decorators/active-user.decorator';
 import { ActiveUserInterface } from 'src/common/interfaces/ActiveUser.interface';
 import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
